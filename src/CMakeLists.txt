@@ -23,20 +23,6 @@ install ( TARGETS icelib
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 
-find_package( ZLIB REQUIRED )
-if ( ZLIB_FOUND )
-    include_directories( ${ZLIB_INCLUDE_DIRS} )
-    list(APPEND ADDITIONAL_LIBS ${ZLIB_LIBRARIES})
-endif( ZLIB_FOUND )
-
-
-find_package( OpenSSL )
-if( OPENSSL_FOUND )
-  include_directories( ${OPENSSL_INCLUDE_DIR} )
-  list(APPEND ADDITIONAL_LIBS ${OPENSSL_LIBRARIES})
-endif( OPENSSL_FOUND )
-
-
 target_link_libraries ( icelib PUBLIC sockaddrutil stunlib
                         ${ADDITIONAL_LIBS})
 
