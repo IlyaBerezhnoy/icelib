@@ -123,61 +123,12 @@ include ( CPack )
 include ( CTest )
 include ( LCov )
 
-UncrustifyTop(${uncrustify})
+#UncrustifyTop(${uncrustify})
 
-if (build_docs)
-    if(NOT DOXYGEN_FOUND)
-        message(FATAL_ERROR "Doxygen is needed to build the documentation.")
-    endif()
-
-    set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
-    set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
-    configure_file(${doxyfile_in} ${doxyfile} @ONLY)
-
-    add_custom_target(doc
-        COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Generating API documentation wit1h Doxygen"
-        VERBATIM)
-
-    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION share/doc)
-endif()
-
-
-Include(ExternalProject)
-
-# setup sockaddr dependency
-ExternalProject_Add(
-   project_sockaddrutil
-   GIT_REPOSITORY https://github.com/NATTools/sockaddrutil.git
-   CMAKE_ARGS -Doptimize=OFF -Dbuild_docs=OFF -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-   INSTALL_DIR "${dist_dir}"
-   UPDATE_DISCONNECTED 1
-)
-
-ExternalProject_Get_Property(project_sockaddrutil install_dir)
-include_directories ( "${install_dir}/include" )
-add_library(sockaddrutil STATIC IMPORTED)
-set_property(TARGET sockaddrutil PROPERTY IMPORTED_LOCATION "${install_dir}/lib/${CMAKE_SHARED_MODULE_PREFIX}sockaddrutil${CMAKE_SHARED_LIBRARY_SUFFIX}")
-add_dependencies(sockaddrutil project_sockaddrutil)
-
-# setup stunlib dependency
-ExternalProject_Add(
-   project_stunlib
-   GIT_REPOSITORY https://github.com/NATTools/stunlib.git
-   CMAKE_ARGS -Doptimize=OFF -Dbuild_docs=OFF -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-   INSTALL_DIR "${dist_dir}"
-   UPDATE_DISCONNECTED 1
-)
-
-ExternalProject_Get_Property(project_stunlib install_dir)
-include_directories ( "${install_dir}/include" )
-add_library(stunlib STATIC IMPORTED)
-set_property(TARGET stunlib PROPERTY IMPORTED_LOCATION "${install_dir}/lib/${CMAKE_SHARED_MODULE_PREFIX}stunlib${CMAKE_SHARED_LIBRARY_SUFFIX}")
-add_dependencies(stunlib project_stunlib)
+add_subdirectory(sockaddrutil)
+add_subdirectory(stunlib)
 
 ## include the parts
 add_subdirectory ( include )
 add_subdirectory ( src )
-add_subdirectory ( test )
+#add_subdirectory ( test )

@@ -1,0 +1,6 @@
+[submodule "sockaddrutil"]
+	path = sockaddrutil
+	url = https://github.com/IlyaBerezhnoy/sockaddrutil.git
+[submodule "stunlib"]
+	path = stunlib
+	url = https://github.com/IlyaBerezhnoy/stunlib.git
