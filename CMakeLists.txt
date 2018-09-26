@@ -31,7 +31,26 @@ option ( coveralls_send "Send data to coveralls site" OFF )
 option ( build_docs "Create docs using Doxygen" ${DOXYGEN_FOUND} )
 option ( uncrustify "Uncrustify the source code" ${UNCRUSTIFY_FOUND} )
 
-set ( dist_dir    ${CMAKE_BINARY_DIR}/dist )
+#*********************************************************
+# binary directory
+#*********************************************************
+if (NOT BIN_DIR)
+    set(BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
+endif()
+
+#*********************************************************
+# output directory
+#*********************************************************
+if (NOT OUTPUT_DIR)
+    set(OUTPUT_DIR ${BIN_DIR}/output)
+endif()
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+set ( CMAKE_BUILD_TYPE Debug )
+
+#set ( dist_dir    ${CMAKE_BINARY_DIR}/dist )
 set ( prefix      ${CMAKE_INSTALL_PREFIX} )
 set ( exec_prefix ${CMAKE_INSTALL_PREFIX}/bin )
 set ( libdir      ${CMAKE_INSTALL_PREFIX}/lib )
@@ -42,10 +61,10 @@ install (FILES ${CMAKE_CURRENT_BINARY_DIR}/icelib.pc DESTINATION lib/pkgconfig )
 
 set ( package_prefix "${CMAKE_PACKAGE_NAME}-${CMAKE_SYSTEM_NAME}" )
 
-set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dist_dir}/bin )
-set ( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${dist_dir}/lib )
-set ( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${dist_dir}/lib )
-set ( CMAKE_BUILD_TYPE Debug )
+#set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dist_dir}/bin )
+#set ( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${dist_dir}/lib )
+#set ( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${dist_dir}/lib )
+#set ( CMAKE_BUILD_TYPE Debug )
 
 ## check and generate configuration
 
@@ -131,4 +150,4 @@ add_subdirectory(stunlib)
 ## include the parts
 add_subdirectory ( include )
 add_subdirectory ( src )
-#add_subdirectory ( test )
+add_subdirectory ( test )
