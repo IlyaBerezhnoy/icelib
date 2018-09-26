@@ -1,7 +1,7 @@
 #
 #
 # Compiling/running tests
-set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dist_dir}/test )
+set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR}/test )
 
 function (sa_test name)
   add_executable ( ${name}_test ${name}_test.c test_utils.c)
