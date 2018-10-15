@@ -11,6 +11,11 @@ set ( icelib_srcs
 
 set (ADDITIONAL_LIBS "")
 
+include_directories ( 
+  "./../sockaddrutil/include" 
+  "./../stunlib/include" 
+)
+
 add_library ( icelib SHARED ${icelib_srcs} )
 target_include_directories ( icelib PUBLIC ../include )
 target_include_directories ( icelib PRIVATE ../src )
